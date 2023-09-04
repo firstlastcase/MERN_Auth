@@ -11,6 +11,7 @@ import LoginScreen from './screens/LoginScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
+import NotFound404 from './screens/NotFound404.jsx'
 // import './index.css'
 
 
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path='' element={<PrivateRoute/>}>
         <Route path='/profile' element={<ProfileScreen/>}></Route>
       </Route>
+      <Route path='*' element={<NotFound404/>}></Route>
     </Route>
 
   )
