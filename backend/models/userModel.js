@@ -16,6 +16,19 @@ const userSchema = mongoose.Schema({
     password:{
         type: String,
         required: true,
+    },
+    role:{
+        type: Number,
+        required: false,
+        // 707 = Super admin, 
+        // 600 = account admin (can add or remove users)
+        // 500 = Campaign manager (can create, remove and run campaigns)
+        // 100 = User (can view campaigns)
+    },
+    account:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'Account',
+        required: true,
     }
 },{
     timestamps:  true

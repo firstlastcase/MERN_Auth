@@ -1,6 +1,7 @@
 import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
 // import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { FaSignInAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaSignInAlt, FaSignOutAlt,FaPhoneSquareAlt } from 'react-icons/fa';
+// import { IconContext } from 'react-icons/lib';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,9 +31,26 @@ const Header = () => {
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand>MERN Auth</Navbar.Brand>
+
+          <LinkContainer to={userInfo?'/home':'/'}>
+            <Navbar.Brand>
+              {/* <IconContext.Provider value={{ color: "00bbff"}}> */}
+                <FaPhoneSquareAlt style={{color: "00bbff", marginRight:"8px"}} size="30px"
+                /> Auto Dialler
+              {/* </IconContext.Provider> */}
+            </Navbar.Brand>
           </LinkContainer>
+
+{/* 
+          {userInfo? (
+          <LinkContainer to='/home'>
+            <Navbar.Brand>Auto Dialler</Navbar.Brand>
+          </LinkContainer>
+          ):(
+          <LinkContainer to='/'>
+            <Navbar.Brand>Auto Dialler</Navbar.Brand>
+          </LinkContainer>
+          )} */}
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
@@ -41,6 +59,9 @@ const Header = () => {
                   <NavDropdown title={userInfo.name} id='username'>
                     <LinkContainer to='/profile'>
                       <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/campaign'>
+                      <NavDropdown.Item>Campaign</NavDropdown.Item>
                     </LinkContainer>
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
@@ -54,11 +75,12 @@ const Header = () => {
                       <FaSignInAlt /> Sign In
                     </Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to='/register'>
+                  {/* temporarly removing the Register option */}
+                  {/* <LinkContainer to='/register'>
                     <Nav.Link>
                       <FaSignOutAlt /> Sign Up
                     </Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer> */}
                 </>
               )}
             </Nav>

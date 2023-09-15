@@ -12,6 +12,8 @@ import RegisterScreen from './screens/RegisterScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
 import NotFound404 from './screens/NotFound404.jsx'
+import Campaign from './screens/Campaign.jsx'
+import HomeLoggedInScreen from './screens/HomeLoggedInScreen.jsx'
 // import './index.css'
 
 
@@ -20,11 +22,17 @@ const router = createBrowserRouter(
     <Route path='/' element={<App/>}>
       <Route index= {true} path='/' element={<HomeScreen/>}></Route>
       <Route path='/login' element={<LoginScreen/>}></Route>
-      <Route path='/register' element={<RegisterScreen/>}></Route>
+
+{/* Temporarily removing the register option */}
+      {/* <Route path='/register' element={<RegisterScreen/>}></Route> */}
+      
       {/* Private routes */}
       <Route path='' element={<PrivateRoute/>}>
         <Route path='/profile' element={<ProfileScreen/>}></Route>
+        <Route path='/home' element={<HomeLoggedInScreen/>}></Route>
+        <Route path='/campaign' element={<Campaign/>}></Route>
       </Route>
+
       <Route path='*' element={<NotFound404/>}></Route>
     </Route>
 

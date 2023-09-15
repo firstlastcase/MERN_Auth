@@ -1,9 +1,11 @@
-import Hero from "../components/Hero"
+// import Hero from "../components/Hero"
+import HomeComponent from "../components/HomeComponent"
 
 const HomeScreen = () => {
   return (
     <>
-        <Hero/>
+        {/* <Hero/> */}
+        <HomeComponent/>
     </>
   )
 }

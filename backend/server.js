@@ -7,6 +7,9 @@ import { notFound,errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 const port = process.env.PORT || 5005;
 import userRoutes from './routes/userRoutes.js'
+import contactRoutes from './routes/contactRoutes.js'
+import campaignRoutes from './routes/campaignRoutes.js'
+import accountRoutes from './routes/accountRoutes.js'
 
 
 connectDB();
@@ -18,6 +21,9 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser())
 
 app.use('/api/users', userRoutes)
+app.use('/api/account', accountRoutes)
+app.use('/api/campaign', campaignRoutes)
+app.use('/api/contact', contactRoutes)
 
 if(process.env.NODE_ENV ==='production'){
     const __dirname = path.resolve();
