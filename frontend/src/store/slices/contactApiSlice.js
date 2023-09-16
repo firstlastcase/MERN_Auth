@@ -1,33 +1,34 @@
 import { apiSlice } from "./apiSlice";
 
-const USERS_URL = '/api/users';
+const CONTACT_URL = '/api/contact';
 
 
-export const usersApiSlice = apiSlice.injectEndpoints({
+export const contactApiSlice = apiSlice.injectEndpoints({
     endpoints:(builder)=>({
-        login: builder.mutation({
+        addContact: builder.mutation({
             query:(data)=>({
-                url:`${USERS_URL}/auth`,
+                url:`${CONTACT_URL}`,
                 method:'POST',
-                body:data
+                body:data  // body is {name:string, phoneNumber:string}
             })
         }),
-        logout: builder.mutation({
+        fetchContact: builder.query({
             query:(data)=>({
-                url:`${USERS_URL}/logout`,
-                method:'POST'
+                url:`${CONTACT_URL}`,
+                method:'GET',
+                params:{id:data}
             })
         }),
         register: builder.mutation({
         query:(data)=>({
-            url:`${USERS_URL}`,
+            url:`${CONTACT_URL}`,
             method:'POST',
             body:data
         })
         }),
         updateUser: builder.mutation({
         query:(data)=>({
-            url:`${USERS_URL}/profile`,
+            url:`${CONTACT_URL}/profile`,
             method:'PUT',
             body:data
         })
