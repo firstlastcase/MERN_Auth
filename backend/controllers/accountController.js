@@ -41,13 +41,14 @@ const getAccount = asyncHandler(async (req, res)=>{
     if(!account){
         res.status(400)
         throw new Error('account not found')
-    }else if(JSON.stringify(account._id)!==JSON.stringify(user.account)){
-        // console.log(JSON.stringify(account._id))
-        // console.log(user.account)
+    }else if(account._id.toString()!==user.account.toString()){
+        // console.log(account._id.toString())
+        // console.log(user.account.toString())
         res.status(401)
         throw new Error('Not Authorised')         
 
     }
+    // console.log(`get account for account: ${req.params.id}`)
     res.status(200).json(account)
 
 })
@@ -63,6 +64,7 @@ const fetchAccounts = asyncHandler(async (req, res)=>{
         res.status(400)
         throw new Error('No accounts were found')
     }
+    // console.log(`fetching accounts for account: ${req.params.account}`)
     res.status(200).json(accounts)
 
 })

@@ -5,7 +5,7 @@ import { sa } from '../middleware/saMiddleware.js';
 const router = express.Router();
 
 
-router.route('/').get(sa, fetchAccounts)
+router.route('/list').get(sa, fetchAccounts)
 router.post('/new', sa, createAccount)
 router.route('/:id').get(protect, getAccount).put(sa, updateAccount).delete(sa, deleteAccount);
 

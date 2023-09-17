@@ -7,6 +7,8 @@ import {toast} from 'react-toastify'
 import Loader from "../components/Loader"
 import { useUpdateUserMutation } from "../store/slices/usersApiSlice"
 import { setCredentials } from "../store/slices/authSlice"
+import useIdleLogout from "../hooks/useIdleLogout"
+import IdleTimeout from "../components/IdleTimeout"
 
 
 export default function ProfileScreen() {
@@ -48,9 +50,12 @@ export default function ProfileScreen() {
         }
         
     }
+    const {handleTimeout} = useIdleLogout()
 
   return (
 
+    <>
+    <IdleTimeout timeout={1800000} onTimeout={handleTimeout} />
     <FormContainer>  
         <h1>Update Profile</h1>
         <Form onSubmit={handleSubmit}>
@@ -99,6 +104,7 @@ export default function ProfileScreen() {
       
         </Form>
     </FormContainer>
+    </>
   )
 }
 

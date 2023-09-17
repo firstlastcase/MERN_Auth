@@ -85,17 +85,17 @@ const deleteCampaign = asyncHandler(async (req, res)=>{
 // @access          Private
 const getCampaigns = asyncHandler(async (req, res)=>{
 
-    if(!req.body.account){
+    if(!req.params){
         res.status(400)
         throw new Error('account is required')
     }
     const user = await User.findById(req.user.id)
-    if(JSON.stringify(user.account)!== JSON.stringify(req.body.account)){
+    if(user.account.toString()!== req.params.id){
         res.status(401)
         throw new Error('Not Authorised')
     }
 
-    const campaigns = await Campaign.find({account: req.body.account})
+    const campaigns = await Campaign.find({account: req.params.id})
     if (campaigns.length === 0){
         res.status(400)
         throw new Error('No campaigns found for this account')

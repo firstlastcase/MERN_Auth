@@ -1,31 +1,13 @@
 import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
-// import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaSignInAlt, FaSignOutAlt,FaPhoneSquareAlt } from 'react-icons/fa';
-// import { IconContext } from 'react-icons/lib';
 import { LinkContainer } from 'react-router-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useLogoutMutation } from '../store/slices/usersApiSlice';
-import { logout } from '../store/slices/authSlice';
+import { useSelector} from 'react-redux';
+import useLogout from '../hooks/useLogout';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [logoutApiCall] = useLogoutMutation();
-
-  const logoutHandler = async () => {
-    try {
-        // console.log('logged out')
-      await logoutApiCall().unwrap();
-      dispatch(logout());
-      navigate('/', { replace: true });
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const {logoutHandler} = useLogout();
 
   return (
     <header>
@@ -34,13 +16,12 @@ const Header = () => {
 
           <LinkContainer to={userInfo?'/home':'/'}>
             <Navbar.Brand>
-              {/* <IconContext.Provider value={{ color: "00bbff"}}> */}
                 <FaPhoneSquareAlt style={{color: "00bbff", marginRight:"8px"}} size="30px"
                 /> Auto Dialler
-              {/* </IconContext.Provider> */}
             </Navbar.Brand>
           </LinkContainer>
 
+{/* replaced code */}
 {/* 
           {userInfo? (
           <LinkContainer to='/home'>
@@ -57,8 +38,14 @@ const Header = () => {
               {userInfo ? (
                 <>
                   <NavDropdown title={userInfo.name} id='username'>
+                    <LinkContainer to='/account'>
+                      <NavDropdown.Item>Account Info</NavDropdown.Item>
+                    </LinkContainer>
                     <LinkContainer to='/profile'>
                       <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/campaignslist'>
+                      <NavDropdown.Item>Campaigns List</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to='/campaign'>
                       <NavDropdown.Item>Campaign</NavDropdown.Item>

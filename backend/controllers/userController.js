@@ -18,7 +18,9 @@ const authUser = asyncHandler(async (req, res)=>{
         res.status(201).json({
             _id:user._id,
             name:user.name,
-            email: user.email
+            email: user.email,
+            role:user.role,
+            account:user.account
         })
     }else{
         res.status(401);
@@ -118,7 +120,7 @@ const updateUserProfile = asyncHandler(async (req, res)=>{
             name:updatedUser.name,
             email: updatedUser.email,
             // role:updatedUser.role,
-            account:updatedUser.account
+            // account:updatedUser.account
         })
     }else {
         res.status(404)

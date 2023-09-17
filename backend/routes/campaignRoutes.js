@@ -4,8 +4,8 @@ import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 
-router.route('/').post(protect, addNewCampaign).get(protect, getCampaigns)
-router.route('/:id').put(protect, updateCampaign).post(protect, runCampaign).delete(protect, deleteCampaign);
+router.route('/').post(protect, addNewCampaign)
+router.route('/:id').put(protect, updateCampaign).post(protect, runCampaign).delete(protect, deleteCampaign).get(protect, getCampaigns);
 
 
 export default router;

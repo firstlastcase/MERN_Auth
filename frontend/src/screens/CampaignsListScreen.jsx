@@ -3,36 +3,61 @@ import { useNavigate } from "react-router-dom"
 import {Button, Form} from 'react-bootstrap'
 import { useSelector} from 'react-redux'
 import FormContainer from "../components/FormContainer"
+import Loader from "../components/Loader"
 import {toast} from 'react-toastify'
 import IdleTimeout from "../components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
+import { useGetCampaignsQuery } from "../store/slices/campaignApiSlice"
 
+export default function CampaignsListScreen(){
 
-export default function Campaign(){
-
-    const [phoneNumId,setPhoneNumId]= useState('')
-    const [contactNumber,setContactNumber] = useState('')
+    // const [phoneNumId,setPhoneNumId]= useState('')
+    // const [contactNumber,setContactNumber] = useState('')
 
     const navigate = useNavigate();
 
 
     const {userInfo} = useSelector(state=>state.auth)
+    const {accountInfo} = useSelector(state=>state.account)
+    const {campaign} = useSelector(state=>state.campaign)
+
+    const {data, error, isLoading} = useGetCampaignsQuery(accountInfo._id)
+
+    // console.log(data ||error)
+
+    let content;
+    if(isLoading){
+        content = <Loader/>
+    } else if(error){
+        content = <div>Error: {error?.data?.message}</div>
+    } else {
+        content = (
+            <div>
+                {data.map(campaign => (
+                    <div key={campaign._id}>
+                        <h3>{campaign.name}</h3>
+                        <p>{campaign.purpose}</p>
+                    </div>
+                ))}
+            </div>
+        )
+    }
 
     useEffect(()=>{
         if(userInfo){
-            navigate('/campaign')
+            navigate('/campaignslist')
         }
     },[navigate,userInfo])
 
-    const runCampaign = async (event)=>{
-        event.preventDefault();
-        try{
-           toast.info('running the campaign! placeholder for the code!!')
-            // navigate('/')
-        }catch(err){
-            toast.error(err?.data?.message || err.error)
-        }
-    }
+    // const runCampaign = async (event)=>{
+    //     event.preventDefault();
+    //     try{
+    //        toast.info('running the campaign! placeholder for the code!!')
+    //         // navigate('/')
+    //     }catch(err){
+    //         toast.error(err?.data?.message || err.error)
+    //     }
+    // }
 
 //######################
 
@@ -82,47 +107,14 @@ export default function Campaign(){
 
     <>
     <IdleTimeout timeout={1800000} onTimeout={handleTimeout} />
-    <FormContainer>
-        <h1>Campain settings</h1>
-        <Form onSubmit={runCampaign}>
-            <Form.Group className="my-2" controlId='phoneNumId'>
-              <Form.Label>Dial from (Your business Phone number)</Form.Label>
-              <Form.Control
-                  type='text'
-                  placeholder="Zendesk Phone number ID"
-                  value={phoneNumId}
-                  onChange={e=>setPhoneNumId(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Button disabled={phoneNumId===''} type='submit' variant='primary' className='mt-3'>
-                Submit
-            </Button>
-            {/* { isLoading && <Loader />} */}
+    
+        <h1>Campains</h1>
+        <FormContainer>
+            {content}
+        </FormContainer>
 
-        </Form>
-            
-    </FormContainer>
-
-    <FormContainer>
-        <h3>Add contacts</h3>
-        <Form onSubmit={runCampaign}>
-            <Form.Group className="my-2" controlId='contactNumber'>
-                <Form.Label>contactNumber</Form.Label>
-                <Form.Control
-                    type='text'
-                    placeholder="Enter contactNumber"
-                    value={contactNumber}
-                    onChange={e=>setContactNumber(e.target.value)}
-                ></Form.Control>
-            </Form.Group>
-            <Button type='submit' variant='primary' className='mt-3'>
-                Add number
-            </Button>
-
-           
-        </Form>
-            
-    </FormContainer>
+      
+      
     </>
   )
 }

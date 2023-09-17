@@ -13,7 +13,9 @@ import ProfileScreen from './screens/ProfileScreen.jsx'
 import PrivateRoute from './components/PrivateRoute.jsx'
 import NotFound404 from './screens/NotFound404.jsx'
 import Campaign from './screens/Campaign.jsx'
+import AccountScreen from './screens/AccountScreen.jsx'
 import HomeLoggedInScreen from './screens/HomeLoggedInScreen.jsx'
+import CampaignsListScreen from './screens/CampaignsListScreen.jsx'
 // import './index.css'
 
 
@@ -29,7 +31,9 @@ const router = createBrowserRouter(
       {/* Private routes */}
       <Route path='' element={<PrivateRoute/>}>
         <Route path='/profile' element={<ProfileScreen/>}></Route>
+        <Route path='/account' element={<AccountScreen/>}></Route>
         <Route path='/home' element={<HomeLoggedInScreen/>}></Route>
+        <Route path='/campaignslist' element={<CampaignsListScreen/>}></Route>
         <Route path='/campaign' element={<Campaign/>}></Route>
       </Route>
 
