@@ -8,6 +8,11 @@ import {toast} from 'react-toastify'
 import IdleTimeout from "../components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
 import { useGetCampaignsQuery } from "../store/slices/campaignApiSlice"
+import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
+import Row from 'react-bootstrap/Row';
+import Tab from 'react-bootstrap/Tab';
+import {LinkContainer} from "react-router-bootstrap"
 
 export default function CampaignsListScreen(){
 
@@ -32,72 +37,46 @@ export default function CampaignsListScreen(){
         content = <div>Error: {error?.data?.message}</div>
     } else {
         content = (
-            <div>
-                {data.map(campaign => (
-                    <div key={campaign._id}>
-                        <h3>{campaign.name}</h3>
-                        <p>{campaign.purpose}</p>
-                    </div>
-                ))}
-            </div>
+            // <div>
+            //     {data.map(campaign => (
+            //         <div key={campaign._id}>
+            //             <h3>{campaign.name}</h3>
+            //             <p>{campaign.purpose}</p>
+            //         </div>
+            //     ))}
+            // </div>
+            // ###############
+        <div>
+        {data.map(campaign => (
+
+             <Row key={campaign._id}>
+                <Col sm={2}>
+                    <Nav variant="pills" className="flex-column">
+                        <Nav.Item >
+                            <Nav.Link eventKey={campaign._id}>{campaign.name}</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                </Col>
+                <Col sm={5}>
+                    <Tab.Content>
+                                            {/* <LinkContainer to='/campaign'> */}
+                        <Tab.Pane eventKey={campaign._id}><strong>Purpose:</strong> {campaign.purpose}</Tab.Pane>
+                                                {/* </LinkContainer> */}
+                    </Tab.Content>
+                </Col>
+            </Row>
+            
+              ))}
+        </div>
         )
-    }
+        }
+    
 
     useEffect(()=>{
         if(userInfo){
             navigate('/campaignslist')
         }
     },[navigate,userInfo])
-
-    // const runCampaign = async (event)=>{
-    //     event.preventDefault();
-    //     try{
-    //        toast.info('running the campaign! placeholder for the code!!')
-    //         // navigate('/')
-    //     }catch(err){
-    //         toast.error(err?.data?.message || err.error)
-    //     }
-    // }
-
-//######################
-
-    // // const {userInfo} = useSelector(state=>state.auth)
-    // const {campaigns} = useSelector(state=>state.campaign)
-    // // const {currentName, currentEmail, currentPassword} = accountInfo
-
-    // const [name,setName]= useState('')
-    // const [number,setNumber]= useState('')
-    // const [accountStatus,setAccountStatus] = useState('')
-    // // const [getAccount, {isLoading}] = useGetAccountQuery()
-
-    // const dispatch = useDispatch()
-    // // const navigate = useNavigate()
-
-
-
-    // useEffect(()=>{
-    //   setName(accountInfo.name)
-    //   setNumber(accountInfo.number)
-    //   setAccountStatus(accountInfo.status)
-              
-    // },[accountInfo.name,accountInfo.number])
-    // // },[])
-
-    // const handleSubmit = async(event)=>{
-    //     event.preventDefault();
-    //     try{
-    //         // const res = await getAccount({id:userInfo.account});
-    //         // dispatch(setAccount({...res}))
-    //         dispatch(setAccount({name:"hello Account",number:44444,status:999}))
-    //         // navigate('/')
-    //         toast.success('User profile updated successfully!')
-    //     }catch(err){
-    //         toast.error(err?.data?.message || err.error)
-
-    //     }
-    // }
-
-
 
 
 //######################
@@ -108,10 +87,16 @@ export default function CampaignsListScreen(){
     <>
     <IdleTimeout timeout={1800000} onTimeout={handleTimeout} />
     
-        <h1>Campains</h1>
-        <FormContainer>
+        <h2>Campains</h2>
+        {/* <FormContainer>
             {content}
-        </FormContainer>
+        </FormContainer> */}
+
+    <Tab.Container defaultActiveKey="first">      
+        {/* <Row> */}
+            {content}
+        {/* </Row> */}
+    </Tab.Container>
 
       
       

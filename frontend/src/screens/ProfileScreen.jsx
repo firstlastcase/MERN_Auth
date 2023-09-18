@@ -16,8 +16,11 @@ export default function ProfileScreen() {
     const {userInfo} = useSelector(state=>state.auth)
     // const {currentName, currentEmail, currentPassword} = userInfo
 
+    // is there a better way to write this? check Stephen Grider's lesson #393 of course: Modern React with Redux
+
     const [name,setName]= useState('')
     const [email,setEmail]= useState('')
+    // const [role,setRole]= useState('')
     const [password,setPassword] = useState('')
     const [confirmPassword,setConfirmPassword] = useState('')
     const [updateProfile, {isLoading}] = useUpdateUserMutation()
@@ -68,6 +71,7 @@ export default function ProfileScreen() {
                     onChange={e=>setName(e.target.value)}
                 ></Form.Control>
             </Form.Group>
+
             <Form.Group className="my-2" controlId='email'>
             <Form.Label>Email Address</Form.Label>
             <Form.Control
@@ -78,6 +82,17 @@ export default function ProfileScreen() {
                 onChange={e=>setEmail(e.target.value)}
             ></Form.Control>
             </Form.Group>
+
+            <Form.Group className="my-2" controlId='role'>
+            <Form.Label>Role</Form.Label>
+            <Form.Control
+                disabled
+                type='text'
+                value={userInfo.role||'No Role'}
+                // onChange={e=>setRole(e.target.value)}
+            ></Form.Control>
+            </Form.Group>
+
             <Form.Group className="my-2" controlId='password'>
                 <Form.Label>Password</Form.Label>
                 <Form.Control

@@ -16,6 +16,7 @@ import Campaign from './screens/Campaign.jsx'
 import AccountScreen from './screens/AccountScreen.jsx'
 import HomeLoggedInScreen from './screens/HomeLoggedInScreen.jsx'
 import CampaignsListScreen from './screens/CampaignsListScreen.jsx'
+import UsersScreen from './screens/UsersScreen.jsx'
 // import './index.css'
 
 
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
         <Route path='/profile' element={<ProfileScreen/>}></Route>
         <Route path='/account' element={<AccountScreen/>}></Route>
         <Route path='/home' element={<HomeLoggedInScreen/>}></Route>
+        <Route path='/usersadmin' element={<UsersScreen/>}></Route>
         <Route path='/campaignslist' element={<CampaignsListScreen/>}></Route>
         <Route path='/campaign' element={<Campaign/>}></Route>
       </Route>

@@ -47,7 +47,7 @@ export default function AccountScreen() {
         try{
             if (data){
             dispatch(setAccount({...data}))
-            toast.success('Account info refreshed!')
+            // toast.success('Account info refreshed!')
             }
         }catch(err){
             toast.error(err?.data?.message || err.error)

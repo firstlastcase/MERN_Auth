@@ -1,13 +1,30 @@
 import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
-import { FaSignInAlt, FaSignOutAlt,FaPhoneSquareAlt } from 'react-icons/fa';
+import { FaSignInAlt, FaRocket, FaSignOutAlt,FaPhoneSquareAlt } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector} from 'react-redux';
 import useLogout from '../hooks/useLogout';
+// import { useEffect } from 'react';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.auth);
 
   const {logoutHandler} = useLogout();
+
+
+  let saContent = null;
+  if (userInfo && userInfo.role && userInfo.role.toString() === import.meta.env.VITE_SA_ROLE) {
+   
+  // if (userInfo ) {
+    
+    saContent = (
+      <Nav className="ml-auto">
+        <LinkContainer to="/usersadmin">
+          <Nav.Link>Admin</Nav.Link>
+        </LinkContainer>
+      </Nav>
+    );
+  }
+
 
   return (
     <header>
@@ -21,40 +38,48 @@ const Header = () => {
             </Navbar.Brand>
           </LinkContainer>
 
-{/* replaced code */}
-{/* 
-          {userInfo? (
-          <LinkContainer to='/home'>
-            <Navbar.Brand>Auto Dialler</Navbar.Brand>
-          </LinkContainer>
-          ):(
-          <LinkContainer to='/'>
-            <Navbar.Brand>Auto Dialler</Navbar.Brand>
-          </LinkContainer>
-          )} */}
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
+
+          {/* <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
-              {userInfo ? (
-                <>
-                  <NavDropdown title={userInfo.name} id='username'>
-                    <LinkContainer to='/account'>
-                      <NavDropdown.Item>Account Info</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to='/profile'>
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
-                    </LinkContainer>
+  
+          </Navbar.Collapse> */}
+
+          {/* ################# */}
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+          <Navbar.Collapse id='basic-navbar-nav'>
+            <Nav className='me-auto'>
+              {userInfo && (
+                  <NavDropdown title='🚀 Campaings' id='campaigns' className="d-flex">
                     <LinkContainer to='/campaignslist'>
                       <NavDropdown.Item>Campaigns List</NavDropdown.Item>
                     </LinkContainer>
                     <LinkContainer to='/campaign'>
                       <NavDropdown.Item>Campaign</NavDropdown.Item>
                     </LinkContainer>
+                  </NavDropdown>              
+              )}
+            </Nav>
+            {saContent}
+            <Nav>
+              {userInfo ? (
+                  <NavDropdown title={userInfo.name} id='username'>
+                    <LinkContainer to='/profile'>
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/account'>
+                      <NavDropdown.Item>Account Info</NavDropdown.Item>
+                    </LinkContainer>
+                    {/* <LinkContainer to='/campaignslist'>
+                      <NavDropdown.Item>Campaigns List</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to='/campaign'>
+                      <NavDropdown.Item>Campaign</NavDropdown.Item>
+                    </LinkContainer> */}
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
                     </NavDropdown.Item>
                   </NavDropdown>
-                </>
               ) : (
                 <>
                   <LinkContainer to='/login'>

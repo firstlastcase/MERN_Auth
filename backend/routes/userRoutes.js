@@ -5,7 +5,7 @@ import { sa } from '../middleware/saMiddleware.js';
 const router = express.Router();
 
 
-router.route('/').get(sa, fetchUsers).post(registerUser)
+router.route('/list').get(sa, fetchUsers).post(registerUser)
 router.post('/auth', authUser)
 router.post('/logout', logoutUser)
 router.put('/role',sa, updateUserRole)

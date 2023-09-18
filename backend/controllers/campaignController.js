@@ -92,7 +92,7 @@ const getCampaigns = asyncHandler(async (req, res)=>{
     const user = await User.findById(req.user.id)
     if(user.account.toString()!== req.params.id){
         res.status(401)
-        throw new Error('Not Authorised')
+        throw new Error('Not Authorised. Is your user profile associated with a valid account?')
     }
 
     const campaigns = await Campaign.find({account: req.params.id})
