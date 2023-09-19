@@ -1,12 +1,8 @@
-// import Badge from 'react-bootstrap/Badge';
-// import ListGroup from 'react-bootstrap/ListGroup';
-// import { useState, useEffect } from "react"
-// import { useNavigate } from "react-router-dom"
 import {Button, Form} from 'react-bootstrap'
-import { useSelector} from 'react-redux'
+// import { useSelector} from 'react-redux'
 import Container from 'react-bootstrap/Container';
 import Loader from "../components/Loader"
-// import {toast} from 'react-toastify'
+import {toast} from 'react-toastify'
 import IdleTimeout from "../components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
 import {useFetchUsersQuery} from "../store/slices/usersApiSlice"
@@ -21,7 +17,7 @@ export default function UsersScreen(){
 
     // const [users,setUsers] = useState([])
 
-    const {userInfo} = useSelector(state=>state.auth)
+    // const {userInfo} = useSelector(state=>state.auth)
     // const {accountInfo} = useSelector(state=>state.account)
 
 
@@ -35,6 +31,7 @@ export default function UsersScreen(){
         content = <Loader/>
     } else if(error){
         content = <div>Error: {error?.data?.message}</div>
+        toast.error(error?.data?.message)
     } else {
         content = (
             <div>
@@ -57,47 +54,11 @@ export default function UsersScreen(){
                         
                 </Row>
 
-
-
-                    // <ListGroup.Item
-                    //     // as="li"
-                    //     className="my-2 d-flex justify-content-between align-items-start"
-                    //     horizontal='lg'
-                    //     key={user._id}
-                    // >
-                    //     {/* <div className="ms-2 me-auto"> */}
-                    //         <div className="fw-bold">{user.name}</div>
-                    //         <div>{user.email}</div>
-                    //         <div>{user.role||null}</div>
-                    //     {/* </div> */}
-                    //     <div> {user.account||null}</div>
-                        
-                    //     <Button variant="danger" >
-                    //     X
-                    //     </Button>
-                    //     <Button variant="dark" >
-                    //     ✏️
-                    //     </Button>
-                    // </ListGroup.Item>
-
-                    // <div key={user._id}>
-                    //     <h3>{user.name}</h3>
-                    //     <p>{user.email}</p>
-                    //     <p>{user.role||null}</p>
-                    // </div>
                 ))}
             </div>
         )
         }
     
-    // useEffect(()=>{
-    //     if(userInfo){
-    //         navigate('/campaignslist')
-    //     }
-    // },[navigate,userInfo])
-
-
-//######################
     const {handleTimeout} = useIdleLogout()
 
   return (

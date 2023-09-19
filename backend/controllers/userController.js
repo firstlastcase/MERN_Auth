@@ -95,7 +95,12 @@ const getUserProfile = asyncHandler(async (req, res)=>{
 // @access          Private
 const fetchUsers = asyncHandler(async (req, res)=>{
     const users = await User.find({})
-    res.status(200).json(users)
+    if(users){
+        res.status(200).json(users)
+    }else{
+        res.status(404)
+        throw new Error('could not get users!')
+    }
 })
 
 // @description     Update user profile
