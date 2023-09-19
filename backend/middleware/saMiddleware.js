@@ -19,7 +19,8 @@ const sa = asyncHandler(async (req, res, next)=>{
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
             req.user = await User.findById(decoded.userId).select('-password')
 
-            if (req.user.role === parseInt(process.env.SA_ROLE)) {
+            console.log(req.user.role)
+            if (req.user.role.toString() === process.env.SA_ROLE) {
             next();
             } else {
                 return res.status(403).json({ message: 'Access forbidden. User does not have the required access level.' });
