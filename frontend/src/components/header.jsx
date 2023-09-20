@@ -21,6 +21,9 @@ const Header = () => {
         <LinkContainer to="/usersadmin">
           <Nav.Link>Admin</Nav.Link>
         </LinkContainer>
+        <LinkContainer to="/addnewuser">
+          <Nav.Link>Add User</Nav.Link>
+        </LinkContainer>
       </Nav>
     );
   }

@@ -3,7 +3,7 @@ import {useSelector} from 'react-redux'
 
 
 
-export default function PrivateRoute(){
+export default function RoutePrivate(){
   const {userInfo} = useSelector(state=>state.auth)
 
 

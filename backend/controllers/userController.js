@@ -34,20 +34,25 @@ const authUser = asyncHandler(async (req, res)=>{
 // route            POST /api/users
 // @access          Public
 const registerUser = asyncHandler(async (req, res)=>{
-    const {name, email, password,accountNumber} = req.body
+    // const {name, email, password,role,accountNumber} = req.body
+    const {name, email, password,role,account} = req.body
     const userExists = await User.findOne({email})
+    if (!account||!name||!email||!password||!role){
+        res.status(400)
+        throw new Error('Please provide all required details!')
+    }
     if (userExists){
         res.status(400)
         throw new Error('User already exists!!')
     }
 
-    
-    const account = await Account.findOne({number:accountNumber})
-    if (account){
+    // const account = await Account.findOne({number:accountNumber})
+    const foundAccount = await Account.findById(account)
+    if (foundAccount){
 
-        const user = await User.create({name, email, password,role:100,account:account._id});
+        const user = await User.create({name, email, password,role:role||100,account:foundAccount._id});
         if (user){
-        generateToken(res, user._id)
+        // generateToken(res, user._id)
         res.status(201).json({
             _id:user._id,
             name:user.name,
@@ -118,6 +123,7 @@ const updateUserProfile = asyncHandler(async (req, res)=>{
             user.password = req.body.password;
         }
 
+        try{
         const updatedUser = await user.save();
 
         res.status(200).json({
@@ -126,7 +132,11 @@ const updateUserProfile = asyncHandler(async (req, res)=>{
             email: updatedUser.email,
             // role:updatedUser.role,
             // account:updatedUser.account
-        })
+        })}
+        catch(err){
+            res.status(400)
+            throw new Error('Could not update user profile.')
+        }
     }else {
         res.status(404)
         throw new Error('User not found')
@@ -157,6 +167,7 @@ const updateUserRole = asyncHandler(async (req, res)=>{
         if(req.body.role){user.role = req.body.role || user.role}
         if (req.body.password) {user.password = req.body.password;}
 
+        try{
         const updatedUser = await user.save();
 
         res.status(200).json({
@@ -166,12 +177,36 @@ const updateUserRole = asyncHandler(async (req, res)=>{
             role:updatedUser.role,
             account:updatedUser.account
         })
+        }catch(err){
+            res.status(400)
+            throw new Error('Could not update user role.')
+        }
     }else {
         res.status(404)
         throw new Error('User not found')
     }
 
 })
+const deleteUser = asyncHandler(async (req, res)=>{
+
+    const user = await User.findById(req.user.id)
 
 
-export {authUser, registerUser, logoutUser, getUserProfile, updateUserProfile,updateUserRole, fetchUsers}
+    if(!user || req.user.role.toString()!== process.env.SA_ROLE){
+        res.status(401)
+        throw new Error('Not Authorized to delete user. are you privileged?')    
+    }
+
+    try{
+        await User.findByIdAndDelete(req.query.id)
+        res.status(200).json({_id:req.query.id})
+    }catch(err){
+        res.status(400)
+        throw new Error('Could not delete user.')
+    }
+  
+
+})
+
+
+export {authUser, registerUser, logoutUser, getUserProfile, updateUserProfile,updateUserRole, deleteUser, fetchUsers}

@@ -31,26 +31,24 @@ const createAccount = asyncHandler(async (req, res)=>{
 })
 
 // @description     Get account
-// route            Get /api/account/:id
+// route            Get /api/account?query
 // @access          Private
 const getAccount = asyncHandler(async (req, res)=>{
-
-
-    const account = await Account.findById(req.params.id)
+    
+    const account = await Account.findOne(req.query)
     const user = await User.findById(req.user.id)
     if(!account){
         res.status(400)
         throw new Error('account not found')
-    }else if(account._id.toString()!==user.account.toString()){
-        // console.log(account._id.toString())
-        // console.log(user.account.toString())
+    }else if(user.role.toString()===process.env.SA_ROLE ||account._id.toString()===user.account.toString()){
+
+        res.status(200).json(account)
+
+    }else{
+    // console.log(`get account for account: ${req.params.id}`)
         res.status(401)
         throw new Error('Not Authorised')         
-
     }
-    // console.log(`get account for account: ${req.params.id}`)
-    res.status(200).json(account)
-
 })
 
 // @description     Fetch accounts

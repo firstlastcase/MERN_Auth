@@ -70,12 +70,12 @@ const LoginScreen = () => {
                 Sign In
             </Button>
 
-            <Row className="py-3">
+            {/* <Row className="py-3">
                 <Col>
                     New user? <Link to='/register'> Register</Link>
                 </Col>
 
-            </Row>
+            </Row> */}
         </Form>
             
     </FormContainer>

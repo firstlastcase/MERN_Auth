@@ -5,11 +5,13 @@ import Loader from "../components/Loader"
 import {toast} from 'react-toastify'
 import IdleTimeout from "../components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
-import {useFetchUsersQuery} from "../store/slices/usersApiSlice"
+import {useFetchUsersQuery, useDeleteUserMutation} from "../store/slices/usersApiSlice"
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 export default function UsersScreen(){
+
+
 
 
 
@@ -23,7 +25,19 @@ export default function UsersScreen(){
 
     // const {campaign} = useSelector(state=>state.campaign)
     const {data, error, isLoading} = useFetchUsersQuery()
+    const [deleteUser, results]=useDeleteUserMutation()
 
+    const handleX=async (userId)=>{
+        // try{
+            const res= await deleteUser(userId)
+            !res.error?toast.success("User deleted successfully"):toast.error(res.error?.data?.message)
+            console.log(res)
+        // }catch(err){
+        
+        // }
+    
+    };
+    const handleEdit=()=>{toast.info('Edit was clicked')};
 
 
     let content;
@@ -47,8 +61,8 @@ export default function UsersScreen(){
                     <Col sm={2}>{user.account||null}</Col>
                    
                     <Col sm={2}>
-                            <Button variant="danger" className='mx-2' >X</Button>
-                            <Button variant="dark" >✏️</Button>
+                            <Button variant="danger" className='mx-2' onClick={()=>handleX(user._id)}>X</Button>
+                            <Button variant="dark" onClick={()=>handleEdit(user._id)}>✏️</Button>
                     </Col>
                     
                         
@@ -61,27 +75,20 @@ export default function UsersScreen(){
     
     const {handleTimeout} = useIdleLogout()
 
+
+
   return (
 
     <>
-    <IdleTimeout timeout={1800000} onTimeout={handleTimeout} />
-    
+        <IdleTimeout timeout={1800000} onTimeout={handleTimeout} />
         <h2>Users</h2>
-        {/* <FormContainer>
-            {content}
-        </FormContainer> */}
+        <br />
+        <div className=' py-5'>
+            <Container>
+                    {content}
+            </Container>
+        </div>
 
-<div className=' py-5'>
-      {/* <Container className='d-flex justify-content-center'>   */}
-      <Container>
-        {/* <Row> */}
-            {content}
-        {/* </Row> */}
-      </Container>
-      </div>
-
-      
-      
     </>
   )
 }

@@ -7,9 +7,10 @@ export const accountApiSlice = apiSlice.injectEndpoints({
     endpoints:(builder)=>({
         getAccount: builder.query({
             query:(data)=>({
-                url:`${ACCOUNT_URL}/${data}`,
-                method:'GET'
-                // params:data
+                // url:`${ACCOUNT_URL}/${data}`,
+                url:`${ACCOUNT_URL}`,
+                method:'GET',
+                params:data
             })
         })
             })

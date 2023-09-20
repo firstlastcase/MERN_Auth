@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.route('/list').get(sa, fetchAccounts)
 router.post('/new', sa, createAccount)
-router.route('/:id').get(protect, getAccount).put(sa, updateAccount).delete(sa, deleteAccount);
+// router.route('/:id').put(sa, updateAccount).delete(sa, deleteAccount);
+router.route('/').get(protect, getAccount)
 
 
 export default router;

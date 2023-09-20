@@ -10,13 +10,15 @@ import HomeScreen from './screens/HomeScreen.jsx'
 import LoginScreen from './screens/LoginScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
 import ProfileScreen from './screens/ProfileScreen.jsx'
-import PrivateRoute from './components/PrivateRoute.jsx'
+import RoutePrivate from './components/RoutePrivate.jsx'
+import RouteSA from './components/RouteSA.jsx'
 import NotFound404 from './screens/NotFound404.jsx'
 import Campaign from './screens/Campaign.jsx'
 import AccountScreen from './screens/AccountScreen.jsx'
 import HomeLoggedInScreen from './screens/HomeLoggedInScreen.jsx'
 import CampaignsListScreen from './screens/CampaignsListScreen.jsx'
 import UsersScreen from './screens/UsersScreen.jsx'
+import CreateUserScreen from './screens/CreateUserScreen.jsx'
 // import './index.css'
 
 
@@ -30,15 +32,19 @@ const router = createBrowserRouter(
       {/* <Route path='/register' element={<RegisterScreen/>}></Route> */}
       
       {/* Private routes */}
-      <Route path='' element={<PrivateRoute/>}>
+      <Route path='' element={<RoutePrivate/>}>
         <Route path='/profile' element={<ProfileScreen/>}></Route>
         <Route path='/account' element={<AccountScreen/>}></Route>
         <Route path='/home' element={<HomeLoggedInScreen/>}></Route>
-        <Route path='/usersadmin' element={<UsersScreen/>}></Route>
         <Route path='/campaignslist' element={<CampaignsListScreen/>}></Route>
         <Route path='/campaign' element={<Campaign/>}></Route>
       </Route>
 
+      <Route path='' element={<RouteSA/>}>
+        <Route path='/usersadmin' element={<UsersScreen/>}></Route>
+        <Route path='/addnewuser' element={<CreateUserScreen/>}></Route> 
+      </Route>
+      
       <Route path='*' element={<NotFound404/>}></Route>
     </Route>
 
