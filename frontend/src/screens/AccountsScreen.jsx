@@ -87,6 +87,7 @@ export default function AccountsScreen(){
                     <Col sm={2}><strong>Account Name</strong></Col>
                     <Col sm={2}><strong>Number</strong></Col>
                     <Col sm={2}><strong>Status</strong></Col>
+                    <Col sm={2}><strong>Actions</strong></Col>
                </Row>
                <hr />
                 {content}
