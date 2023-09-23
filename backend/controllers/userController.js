@@ -130,8 +130,8 @@ const updateUserProfile = asyncHandler(async (req, res)=>{
             _id: updatedUser._id,
             name:updatedUser.name,
             email: updatedUser.email,
-            // role:updatedUser.role,
-            // account:updatedUser.account
+            role:updatedUser.role,
+            account:updatedUser.account
         })}
         catch(err){
             res.status(400)
