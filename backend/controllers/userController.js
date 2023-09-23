@@ -150,25 +150,27 @@ const updateUserProfile = asyncHandler(async (req, res)=>{
 // @access          Private
 const updateUserRole = asyncHandler(async (req, res)=>{
 
-    const user = await User.findById(req.user._id)
+    const userToUpdate = await User.findById(req.params.id)
 
-    if (user){
+    if (userToUpdate){
         
-        user.name=req.body.name || user.name
-        user.email=req.body.email || user.email
+        userToUpdate.name=req.body.name || userToUpdate.name
+        userToUpdate.email=req.body.email || userToUpdate.email
         if(req.body.account){
-            const updatedAccount = await Account.findOne({number:req.body.account.number})
-            if(updatedAccount){user.account=updatedAccount || user.account}
-            else{
+            // const updatedAccount = await Account.findById({_id:req.body.account._id})
+            
+            // if(updatedAccount){userToUpdate.account=updatedAccount || userToUpdate.account}
+            userToUpdate.account=req.body.account || userToUpdate.account
+        }else{
                 res.status(404)
                 throw new Error('Account not found, please enter a valid account number or create a new account!')
             }
-        }
-        if(req.body.role){user.role = req.body.role || user.role}
-        if (req.body.password) {user.password = req.body.password;}
-
+        
+        if(req.body.role){userToUpdate.role = req.body.role || userToUpdate.role}
+        if (req.body.password) {userToUpdate.password = req.body.password;}
+        
         try{
-        const updatedUser = await user.save();
+        const updatedUser = await userToUpdate.save();
 
         res.status(200).json({
             _id: updatedUser._id,
@@ -187,19 +189,22 @@ const updateUserRole = asyncHandler(async (req, res)=>{
     }
 
 })
+
+
+
 const deleteUser = asyncHandler(async (req, res)=>{
 
-    const user = await User.findById(req.user.id)
+    // const user = await User.findById(req.user.id)
 
 
-    if(!user || req.user.role.toString()!== process.env.SA_ROLE){
-        res.status(401)
-        throw new Error('Not Authorized to delete user. are you privileged?')    
-    }
+    // if(!user || req.user.role.toString()!== process.env.SA_ROLE){
+    //     res.status(401)
+    //     throw new Error('Not Authorized to delete user. are you privileged?')    
+    // }
 
     try{
-        await User.findByIdAndDelete(req.query.id)
-        res.status(200).json({_id:req.query.id})
+        await User.findByIdAndDelete(req.params.id)
+        res.status(200).json({_id:req.params.id})
     }catch(err){
         res.status(400)
         throw new Error('Could not delete user.')

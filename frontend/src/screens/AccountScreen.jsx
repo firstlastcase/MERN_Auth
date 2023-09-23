@@ -21,7 +21,7 @@ export default function AccountScreen() {
     // const [number,setNumber]= useState('')
     // const [accountStatus,setAccountStatus] = useState('')
 
-    const {data, error, isLoading} = useGetAccountQuery(userInfo.account)
+    const {data, error, isLoading} = useGetAccountQuery({_id:userInfo.account})
     //data is the account object {name, number, accountStatus}
 
     // if(error){

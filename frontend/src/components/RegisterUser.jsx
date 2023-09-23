@@ -40,7 +40,7 @@ export default function RegisterUser({endUser=true, account}) {
                 
                 const res = await register({email, name, password, role, account}).unwrap();
                 res&&endUser&&navigate('/login')
-                res&&toast.success('Registration successful')
+                res&&endUser?toast.success('Registration successful'):res&&toast.success('User created successfully')
             }catch(err){
                 toast.error(err?.data?.message || err.error)
             }       

@@ -18,7 +18,8 @@ import AccountScreen from './screens/AccountScreen.jsx'
 import HomeLoggedInScreen from './screens/HomeLoggedInScreen.jsx'
 import CampaignsListScreen from './screens/CampaignsListScreen.jsx'
 import UsersScreen from './screens/UsersScreen.jsx'
-import CreateUserScreen from './screens/CreateUserScreen.jsx'
+import AccountsScreen from './screens/AccountsScreen.jsx'
+// import CreateUserScreen from './screens/CreateUserScreen.jsx'
 // import './index.css'
 
 
@@ -42,7 +43,8 @@ const router = createBrowserRouter(
 
       <Route path='' element={<RouteSA/>}>
         <Route path='/usersadmin' element={<UsersScreen/>}></Route>
-        <Route path='/addnewuser' element={<CreateUserScreen/>}></Route> 
+        <Route path='/accountsadmin' element={<AccountsScreen/>}></Route>
+        {/* <Route path='/addnewuser' element={<CreateUserScreen/>}></Route>  */}
       </Route>
       
       <Route path='*' element={<NotFound404/>}></Route>

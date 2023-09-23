@@ -15,12 +15,12 @@ const HomeLoggedInScreen = () => {
     const { userInfo } = useSelector((state) => state.auth);
     const {handleTimeout} = useIdleLogout()
     const {accountInfo} = useSelector(state=>state.account)
-    const {data, error, isLoading} = useGetAccountQuery(userInfo.account)
+    const {data, error, isLoading} = useGetAccountQuery({_id:userInfo.account})
 
   useEffect(() => {
      if (data){
             dispatch(setAccount({...data}))
-            console.log('account info updated')
+            // console.log('account info updated')
             }
 },[data])
 

@@ -17,14 +17,21 @@ const Header = () => {
   // if (userInfo ) {
     
     saContent = (
-      <Nav className="ml-auto">
-        <LinkContainer to="/usersadmin">
-          <Nav.Link>Admin</Nav.Link>
+
+      <Nav>
+
+      <NavDropdown className="ml-auto" title='Admin' id='admin'>
+          <LinkContainer to="/usersadmin">
+          <NavDropdown.Item>Users</NavDropdown.Item>
         </LinkContainer>
-        <LinkContainer to="/addnewuser">
-          <Nav.Link>Add User</Nav.Link>
+        <LinkContainer to="/accountsadmin">
+          <NavDropdown.Item>Accounts</NavDropdown.Item>
         </LinkContainer>
+
+
+      </NavDropdown>
       </Nav>
+              
     );
   }
 
@@ -33,6 +40,7 @@ const Header = () => {
     <header>
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
+
 
           <LinkContainer to={userInfo?'/home':'/'}>
             <Navbar.Brand>
@@ -100,6 +108,7 @@ const Header = () => {
               )}
             </Nav>
           </Navbar.Collapse>
+
         </Container>
       </Navbar>
     </header>

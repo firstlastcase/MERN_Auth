@@ -12,33 +12,43 @@ export const accountApiSlice = apiSlice.injectEndpoints({
                 method:'GET',
                 params:data
             })
+        }),
+        addAccount: builder.mutation({
+        invalidatesTags:['Account'],
+        query:(data)=>({
+            url:`${ACCOUNT_URL}/new`,
+            method:'POST',
+            body:data
         })
-            })
+        }),
+        updateAccount: builder.mutation({
+        invalidatesTags:['Account'],
+        query:(data)=>({
+            url:`${ACCOUNT_URL}/${data._id}`,
+            method:'PUT',
+            body:data
+        })
+        }),
+        fetchAccounts: builder.query({
+        providesTags:['Account'],
+        query:()=>({
+            url:`${ACCOUNT_URL}/list`,
+            method:'GET'
+        })
+        }),
+        deleteAccount: builder.mutation({
+        invalidatesTags:['Account'],
+        query:(data)=>({
+            url:`${ACCOUNT_URL}/${data}`,
+            method:'DELETE'
+        })
+        })
+    })
 })
 
-export const {useGetAccountQuery} = accountApiSlice;
-        // logout: builder.mutation({
-        //     query:(data)=>({
-        //         url:`${ACCOUNT_URL}/logout`,
-        //         method:'POST'
-        //     })
-        // }),
-        // register: builder.mutation({
-        // query:(data)=>({
-        //     url:`${ACCOUNT_URL}`,
-        //     method:'POST',
-        //     body:data
-        // })
-        // }),
-        // updateAccount: builder.mutation({
-        // query:(data)=>({
-        //     url:`${ACCOUNT_URL}`,
-        //     method:'PUT',
-        //     params:{id:data.id},
-        //     body:data
-        // })
-        // })
-//     })
-// })
-
-// export const {useGetAccountQuery} = accountApiSlice;
+export const {
+    useGetAccountQuery,
+    useUpdateAccountMutation, 
+    useFetchAccountsQuery,
+    useDeleteAccountMutation,
+    useAddAccountMutation} = accountApiSlice;
