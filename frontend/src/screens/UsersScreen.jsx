@@ -42,6 +42,8 @@ export default function UsersScreen(){
     };
 
     let content;
+    let accountNumber;
+
     if(isLoading|isLoadingAccounts) {
         // content = <Loader/>
         content = <SkeletonLoader lines={4}/>
@@ -55,6 +57,10 @@ export default function UsersScreen(){
                     if(errorAccounts||!accounts) {return}
                     
                     const account= accounts.filter(account=>account._id===user.account)
+                    
+                    if(account.length===1) {accountNumber=account[0].number}
+                    else {accountNumber="unknown"}
+
                     return(
 
 
@@ -64,8 +70,8 @@ export default function UsersScreen(){
                     <Col sm={2}>{user.name}</Col>
                     <Col sm={2}>{user.email}</Col>
                     <Col sm={2}>{user.role||null}</Col>
-                    <Col sm={3}>{account[0].number||null}</Col>
-                    {/* <Col sm={3}>{accountId||null}</Col> */}
+                    <Col sm={3}>{accountNumber}</Col>
+
                    
                     <Col sm={2}>
                             <Button variant="danger" className='mx-2' onClick={()=>handleX(user._id)}>X</Button>
