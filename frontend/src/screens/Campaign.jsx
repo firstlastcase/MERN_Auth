@@ -7,6 +7,9 @@ import {toast} from 'react-toastify'
 import IdleTimeout from "../components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
 
+import ContactListUpload from './ContactListUpload';
+// import TableView from "./XTestFileTable"
+
 
 export default function Campaign(){
 
@@ -35,6 +38,8 @@ export default function Campaign(){
     }
 
 //######################
+
+// #####################################
 
     // // const {userInfo} = useSelector(state=>state.auth)
     // const {campaigns} = useSelector(state=>state.campaign)
@@ -122,6 +127,12 @@ export default function Campaign(){
            
         </Form>
             
+    </FormContainer>
+    <FormContainer>
+        <h3>CSV File Upload and Display</h3>
+        {/* <ContactListUpload onFileUpload={handleFileUpload} /> */}
+        <ContactListUpload />
+        {/* <TableView data={csvData} /> */}
     </FormContainer>
     </>
   )

@@ -7,7 +7,7 @@ import axios from 'axios'
 // @description     Add a new campaign 
 // route            POST /api/campaign
 // @access          Private
-const addNewCampaign = asyncHandler(async (req, res)=>{
+const addCampaign = asyncHandler(async (req, res)=>{
     //  campaign:{name,purpose,status,account,created_by} 
     const {name,purpose,accountNumber} = req.body
     const user = await User.findById(req.user.id)
@@ -83,7 +83,7 @@ const deleteCampaign = asyncHandler(async (req, res)=>{
 // @description     Get campaigns by account
 // route            Get /api/campaign
 // @access          Private
-const getCampaigns = asyncHandler(async (req, res)=>{
+const fetchCampaigns = asyncHandler(async (req, res)=>{
 
     if(!req.params){
         res.status(400)
@@ -159,4 +159,4 @@ const updateCampaign = asyncHandler(async (req, res)=>{
     // res.status(200).json({message:'Update Campaign Profile'})
 })
 
-export { runCampaign, getCampaigns, updateCampaign, addNewCampaign, deleteCampaign}
+export { runCampaign, fetchCampaigns, updateCampaign, addCampaign, deleteCampaign}

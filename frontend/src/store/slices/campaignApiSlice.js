@@ -5,39 +5,36 @@ const CAMPAIGN_URL = '/api/campaign';
 
 export const campaignApiSlice = apiSlice.injectEndpoints({
     endpoints:(builder)=>({
-        getCampaigns: builder.query({
+        fetchCampaigns: builder.query({
             query:(data)=>({
                 url:`${CAMPAIGN_URL}/${data}`, //data is the account id
                 method:'GET'
-                // body:data //data is something like this {account:account_id}
             })
+        }),
+        addCampaign: builder.mutation({
+        invalidatesTags:['Campaign'],
+        query:(data)=>({
+            url:`${CAMPAIGN_URL}/new`,
+            method:'POST',
+            body:data
         })
-            })
+        }),
+        updateCampaign: builder.mutation({
+        invalidatesTags:['Campaign'],
+        query:(data)=>({
+            url:`${CAMPAIGN_URL}/${data._id}`,
+            method:'PUT',
+            body:data
+        })
+        }),
+        deleteCampaign: builder.mutation({
+        invalidatesTags:['Campaign'],
+        query:(data)=>({
+            url:`${CAMPAIGN_URL}/${data}`,
+            method:'DELETE'
+        })
+        })
+    })
 })
 
-export const {useGetCampaignsQuery} = campaignApiSlice;
-        // logout: builder.mutation({
-        //     query:(data)=>({
-        //         url:`${ACCOUNT_URL}/logout`,
-        //         method:'POST'
-        //     })
-        // }),
-        // register: builder.mutation({
-        // query:(data)=>({
-        //     url:`${ACCOUNT_URL}`,
-        //     method:'POST',
-        //     body:data
-        // })
-        // }),
-        // updateAccount: builder.mutation({
-        // query:(data)=>({
-        //     url:`${ACCOUNT_URL}`,
-        //     method:'PUT',
-        //     params:{id:data.id},
-        //     body:data
-        // })
-        // })
-//     })
-// })
-
-// export const {} = campaignApiSlice;
+export const {useFetchCampaignsQuery, useAddCampaignMutation} = campaignApiSlice;

@@ -30,7 +30,7 @@ export default function AccountEdit({account}) {
         try{
             const res = await updateAccount({_id:account._id, name, number,status}).unwrap();
             !res.error?toast.success("Account updated successfully"):toast.error(res.error?.data?.message)
-            console.log(res)
+            // console.log(res)
 
         }catch(err){
             toast.error(err?.data?.message || err.error)

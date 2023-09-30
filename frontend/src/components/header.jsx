@@ -99,11 +99,11 @@ const Header = () => {
                     </Nav.Link>
                   </LinkContainer>
                   {/* temporarly removing the Register option */}
-                  {/* <LinkContainer to='/register'>
+                  <LinkContainer to='/register'>
                     <Nav.Link>
                       <FaSignOutAlt /> Sign Up
                     </Nav.Link>
-                  </LinkContainer> */}
+                  </LinkContainer>
                 </>
               )}
             </Nav>

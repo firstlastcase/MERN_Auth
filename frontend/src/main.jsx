@@ -16,10 +16,9 @@ import NotFound404 from './screens/NotFound404.jsx'
 import Campaign from './screens/Campaign.jsx'
 import AccountScreen from './screens/AccountScreen.jsx'
 import HomeLoggedInScreen from './screens/HomeLoggedInScreen.jsx'
-import CampaignsListScreen from './screens/CampaignsListScreen.jsx'
+import CampaignsScreen from './screens/CampaignsScreen.jsx'
 import UsersScreen from './screens/UsersScreen.jsx'
 import AccountsScreen from './screens/AccountsScreen.jsx'
-// import CreateUserScreen from './screens/CreateUserScreen.jsx'
 // import './index.css'
 
 
@@ -30,21 +29,20 @@ const router = createBrowserRouter(
       <Route path='/login' element={<LoginScreen/>}></Route>
 
 {/* Temporarily removing the register option */}
-      {/* <Route path='/register' element={<RegisterScreen/>}></Route> */}
+      <Route path='/register' element={<RegisterScreen/>}></Route>
       
       {/* Private routes */}
       <Route path='' element={<RoutePrivate/>}>
         <Route path='/profile' element={<ProfileScreen/>}></Route>
         <Route path='/account' element={<AccountScreen/>}></Route>
         <Route path='/home' element={<HomeLoggedInScreen/>}></Route>
-        <Route path='/campaignslist' element={<CampaignsListScreen/>}></Route>
+        <Route path='/campaignslist' element={<CampaignsScreen/>}></Route>
         <Route path='/campaign' element={<Campaign/>}></Route>
       </Route>
 
       <Route path='' element={<RouteSA/>}>
         <Route path='/usersadmin' element={<UsersScreen/>}></Route>
         <Route path='/accountsadmin' element={<AccountsScreen/>}></Route>
-        {/* <Route path='/addnewuser' element={<CreateUserScreen/>}></Route>  */}
       </Route>
       
       <Route path='*' element={<NotFound404/>}></Route>

@@ -24,11 +24,11 @@ const HomeComponent = () => {
                 </Button>
             </LinkContainer>
         {/* Temporarily removing the register option */}
-            {/* <LinkContainer to='/register'>
+            <LinkContainer to='/register'>
                 <Button variant='secondary'>
                 Register
                 </Button>
-            </LinkContainer> */}
+            </LinkContainer>
           </div>
         </Card>
       </Container>

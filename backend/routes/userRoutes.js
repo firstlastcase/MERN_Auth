@@ -5,7 +5,8 @@ import { sa } from '../middleware/saMiddleware.js';
 const router = express.Router();
 
 
-router.post('/new',sa,registerUser)
+router.post('/new',registerUser)
+// router.post('/new',sa,registerUser)
 router.delete('/del/:id',sa,deleteUser)
 router.get('/list',sa, fetchUsers)
 router.put('/role/:id',sa, updateUserRole)

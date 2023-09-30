@@ -1,23 +1,22 @@
-import { Link, useNavigate } from "react-router-dom"
-import FormContainer from "./FormContainer"
-import { useRegisterMutation } from "../store/slices/usersApiSlice"
-import {toast} from 'react-toastify'
-import Loader from './Loader';
+// import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+// import { Link, useNavigate } from "react-router-dom"
+// import {Form, Row, Col} from 'react-bootstrap'
+// import {useDispatch, useSelector} from 'react-redux'
+import FormContainer from "../components/FormContainer"
+// import { useLoginMutation } from "../store/slices/usersApiSlice"
+// import { setCredentials } from "../store/slices/authSlice"
+// import {toast} from 'react-toastify'
+// import Loader from '../components/Loader';
 
 import Button from "@mui/material/Button";
 import  TextField from "@mui/material/TextField";
-import { useFormControls } from "../hooks/useFormControls";
+import { useLoginFormControls } from "../hooks/useLoginFormControls";
 import Box from '@mui/material/Box';
 
 
 
     const inputFieldValues = [
-        {
-            name: "name",
-            label: "Name",
-            id: "name"
-            
-        },
         {
             name: "email",
             label: "Email",
@@ -31,60 +30,24 @@ import Box from '@mui/material/Box';
             id: "password",
             type: "password"
         },
-        {
-            name: "confirmPassword",
-            label: "confirmPassword",
-            id: "confirmPassword",
-            type: "password"
-        },
         ];
 
-        const initialFormValues = {
-            name:"",
-            email: "",
-            password:'',
-            confirmPassword:"",
-            formSubmitted: false,
-            success: false
-        };
 
+export default function LoginScreen(){
 
-export default function RegisterUser({account}){
-
-    const navigate = useNavigate();
-
-  
-    const [register, {isLoading}] = useRegisterMutation()
-
-
-
-    const onFormSubmit= async (v)=>{
-          const name=v.name;
-          const email=v.email;
-          const password = v.password;
-          try{
-            const res = await register({email, name, password, account}).unwrap();
-            res&&navigate('/login')
-            res?toast.success('Registration successful'):res&&toast.success('User created successfully')
-        }catch(err){
-            toast.error(err?.data?.message || err.error)
-        }       
-    }
-
-        const {
+    const {
         handleInputValue,
         handleFormSubmit,
         formIsValid,
         errors
-    } = useFormControls(initialFormValues,onFormSubmit);
-
+    } = useLoginFormControls();
 
 
   return (
 
         <>
     <FormContainer>  
-        <h1>Register</h1>
+        <h1>Sign In</h1>
         <br />
    
     <Box
@@ -125,16 +88,16 @@ export default function RegisterUser({account}){
             type="submit"
             disabled={!formIsValid()}
         >
-            Sign Up
+            Sign In
         </Button>
         {/* </form> */}
     </Box>
     <br />
     <div>
-        Existing user? <Link to='/login'> Login</Link>
+        New user? <Link to='/register'> Register</Link>
     </div>
 
-        <div>{ isLoading && <Loader />}</div>
+        {/* <div>{ isLoading && <Loader />}</div> */}
     </FormContainer>
     </>
     

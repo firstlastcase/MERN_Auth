@@ -11,7 +11,9 @@ import Row from 'react-bootstrap/Row';
 import AppModal from '../components/AppModal';
 import UserEdit from '../components/UserEdit';
 import UserAdd from '../components/UserAdd';
+// import UserAdd2 from '../components/UserAdd2';
 import { useSelector } from 'react-redux'
+import SkeletonLoader from '../components/SkeletonLoader';
 
 
 export default function UsersScreen(){
@@ -40,8 +42,9 @@ export default function UsersScreen(){
     };
 
     let content;
-    if(isLoading){
-        content = <Loader/>
+    if(isLoading|isLoadingAccounts) {
+        // content = <Loader/>
+        content = <SkeletonLoader lines={4}/>
     } else if(error){
         content = <div>Error: {error?.data?.message}</div>
         toast.error(error?.data?.message)
@@ -91,7 +94,17 @@ export default function UsersScreen(){
 
     <>
         <IdleTimeout timeout={1800000} onTimeout={handleTimeout} />
-        <h2>Users</h2>
+            <div className=' py-3 d-flex justify-content-between'>
+                <h2>Users</h2>
+                <AppModal
+                    buttonText='Add New User'
+                    buttonAttributes={{variant:"secondary"}}
+                    title={'Add New User'} 
+                    modalContent={<UserAdd/>}
+                    // modalContent={<UserAdd2/>}
+                    />
+
+            </div>
         <br />
         <div className=' py-5'>
             <Container>
@@ -105,14 +118,6 @@ export default function UsersScreen(){
                <hr />
                 {content}
             </Container>
-            <br />
-            <AppModal
-                buttonText='Add New User'
-                buttonAttributes={{variant:"secondary"}}
-                title={'Add New User'} 
-                modalContent={<UserAdd/>}
-                />
-
 
         </div>
 

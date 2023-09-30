@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/Row';
 import AppModal from '../components/AppModal';
 import AccountEdit from '../components/AccountEdit';
 import AccountAdd from '../components/AccountAdd';
+import SkeletonLoader from '../components/SkeletonLoader';
 
 export default function AccountsScreen(){
 
@@ -22,11 +23,9 @@ export default function AccountsScreen(){
     const [deleteAccount, results]=useDeleteAccountMutation()
 
     const handleX=async (accountId)=>{
-            // the following line is just to prevent delete at this stage till i 
-            // implement a way to check if there are users associated with the account
 
             const associatedUsers = users.filter(user=>(user.account===accountId))
-            if(associatedUsers.length>0) {toast.error('account has users associated with it', accountId); return null}
+            if(associatedUsers.length>0) {toast.error(`account has ${associatedUsers.length} user(s) associated with it`); return null}
 
             const res= await deleteAccount(accountId)
             !res.error?toast.success("Account deleted successfully"):toast.error(res.error?.data?.message)
@@ -35,7 +34,8 @@ export default function AccountsScreen(){
 
     let content;
     if(isLoading){
-        content = <Loader/>
+        // content = <Loader/>
+        content = <SkeletonLoader/>
     } else if(error){
         content = <div>Error: {error?.data?.message}</div>
         toast.error(error?.data?.message)
@@ -52,7 +52,13 @@ export default function AccountsScreen(){
                     <Col sm={2}>{account.status}</Col>
                    
                     <Col sm={2}>
-                            <Button variant="danger" className='mx-2' onClick={()=>handleX(account._id)}>X</Button>
+                            <Button 
+                                disabled={usersError}
+                                variant="danger" 
+                                className='mx-2' 
+                                onClick={()=>handleX(account._id)}>
+                                    {usersLoading?<Loader/>:'X'}
+                            </Button>
                             <AppModal 
                                 buttonText='✏️'
                                 title={`Editing Account: ${account.name}`} 
@@ -78,9 +84,17 @@ export default function AccountsScreen(){
 
     <>
         <IdleTimeout timeout={1800000} onTimeout={handleTimeout} />
-        <h2>Accounts</h2>
-        <br />
-        <div className=' py-5'>
+        <div className=' py-3 d-flex justify-content-between'>
+            <h2>Accounts</h2>
+            <AppModal
+                buttonText='Add New Account'
+                buttonAttributes={{variant:"secondary"}}
+                title={'Add New Account'} 
+                modalContent={<AccountAdd/>}
+                />
+        </div>
+        {/* <br /> */}
+        <div className=' py-3'>
             <Container>
                 <Row  className="my-2 d-flex justify-content-between align-items-start">
                     <Col sm={4}><strong>ID</strong></Col>
@@ -93,14 +107,12 @@ export default function AccountsScreen(){
                 {content}
             </Container>
             <br />
-            <AppModal
+            {/* <AppModal
                 buttonText='Add New Account'
                 buttonAttributes={{variant:"secondary"}}
                 title={'Add New Account'} 
                 modalContent={<AccountAdd/>}
-                />
-
-
+                /> */}
         </div>
 
     </>
