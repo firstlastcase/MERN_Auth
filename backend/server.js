@@ -8,6 +8,7 @@ import connectDB from './config/db.js';
 const port = process.env.PORT || 5005;
 import userRoutes from './routes/userRoutes.js'
 import contactRoutes from './routes/contactRoutes.js'
+import contactListRoutes from './routes/contactListRoutes.js'
 import campaignRoutes from './routes/campaignRoutes.js'
 import accountRoutes from './routes/accountRoutes.js'
 
@@ -24,6 +25,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/account', accountRoutes)
 app.use('/api/campaign', campaignRoutes)
 app.use('/api/contact', contactRoutes)
+app.use('/api/contactlist', contactListRoutes)
 
 if(process.env.NODE_ENV ==='production'){
     const __dirname = path.resolve();

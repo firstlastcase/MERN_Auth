@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import {Button, Form} from 'react-bootstrap'
+import {Button, Col, Form, Row} from 'react-bootstrap'
 import { useSelector} from 'react-redux'
 import Loader from "../components/Loader"
 import {toast} from 'react-toastify'
@@ -12,6 +12,7 @@ import AppModal from '../components/AppModal'
 import CampaignAdd from "../components/CampaignAdd"
 import { DataGrid } from '@mui/x-data-grid';
 import SkeletonLoader from "../components/SkeletonLoader"
+import FormContainer from "../components/FormContainer"
 
 
 export default function CampaignsScreen(){
@@ -23,14 +24,44 @@ export default function CampaignsScreen(){
 
 
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
 
-    const {userInfo} = useSelector(state=>state.auth)
+    // const {userInfo} = useSelector(state=>state.auth)
     const {accountInfo} = useSelector(state=>state.account)
     // const {campaign} = useSelector(state=>state.campaign)
 
     const {data:campaigns, error, isLoading} = useFetchCampaignsQuery(accountInfo._id)
+
+let campaignsContent;
+    if (isLoading) {
+      campaignsContent = <SkeletonLoader/>
+    } else if (error){
+      toast.error(error)
+      campaignsContent = <div>Error!</div>
+    // } else if (campaignsContent.length === 0) {
+    //   campaignsContent = <div>No campaign found</div>
+    } else {
+      campaignsContent = (
+        <div>
+                {campaigns.map(campaign => {
+
+                    return(
+
+
+                <Row  className="my-2 d-flex justify-content-between align-items-start"
+                        
+                        key={campaign._id}>
+                    <Col sm={2}>{campaign.name}</Col>
+                    <Col sm={2}>{campaign.purpose}</Col>     
+                </Row>
+
+                )})}
+            </div>
+      )
+    }
+
+
     
     const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -91,11 +122,11 @@ const rows = [
     }
     
 
-    useEffect(()=>{
-        if(userInfo){
-            navigate('/campaignslist')
-        }
-    },[navigate,userInfo])
+    // useEffect(()=>{
+    //     if(userInfo){
+    //         navigate('/campaignslist')
+    //     }
+    // },[navigate,userInfo])
 
 
 //######################
@@ -126,10 +157,9 @@ const rows = [
 
 
 
-
-        {/* <Tab.Container defaultActiveKey="first">      
-                {content}
-        </Tab.Container> */}
+        {/* <FormContainer >       */}
+                {  campaignsContent}
+        {/* </FormContainer> */}
         {/* <br /> */}
     </>
   )

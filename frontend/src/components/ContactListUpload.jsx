@@ -2,12 +2,12 @@
 import { useState , useRef} from 'react';
 // import axios from 'axios';
 import Papa from 'papaparse';
-import TableView from './XTestFileTable';
+import TableView from '../screens/XTestFileTable';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import {MdDeleteForever} from 'react-icons/Md';
-import SkeletonLoader from '../components/SkeletonLoader';
-import Loader from '../components/Loader';
+import SkeletonLoader from './SkeletonLoader';
+import Loader from './Loader';
 // import {CloudUploadIcon} from 'react-icons';
 
 // export default function ContactListUpload({ onFileUpload }) {

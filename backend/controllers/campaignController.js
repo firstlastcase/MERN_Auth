@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler'
 import Campaign from "../models/campaignModel.js"
 import User from "../models/userModel.js"
 import Account from "../models/accountModel.js"
-import axios from 'axios'
+// import axios from 'axios'
 
 // @description     Add a new campaign 
 // route            POST /api/campaign

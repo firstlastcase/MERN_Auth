@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const contactSchema = mongoose.Schema({
     name:{
         type: String,
-        required: true,
+        required: false,
     },
     phoneNumber:{
         type: String,
@@ -12,13 +12,22 @@ const contactSchema = mongoose.Schema({
     },
     status:{
         type: Number,
+        required: false,
+    },
+    everContacted:{
+        type: Boolean,
         required: true,
     },
-    campaign:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Campaign',
-        required: true
+    lastContactedDate: {
+        type: Date,
+        required: false
     }
+    // ,
+    // contactList:{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'contactList',
+    //     required: true
+    // }
 },{
     timestamps:  true
 })
