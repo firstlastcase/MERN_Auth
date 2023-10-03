@@ -6,6 +6,10 @@ const campaignSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    number:{
+        type: Number,
+        required: true,
+    },
     purpose:{
         type: String,
         required: false
@@ -17,12 +21,17 @@ const campaignSchema = mongoose.Schema({
     createdBy:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: false,
+        required: true,
     },
     account:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account',
-        required: false,
+        required: true,
+    },
+    contactList:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'ContactList',
+        required: true,
     }
 },{
     timestamps:  true

@@ -1,58 +1,63 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
+export default function ContactListContacts({ contactList }) {
+  const contacts = contactList.contacts;
 
+  let tableContents;
+  if (contacts.length === 0) {
+    tableContents = (
+      <TableBody>
+        {/* <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}> */}
+        <TableRow>
+          <TableCell>-</TableCell>
+          <TableCell component="th" scope="row">
+            Nothing to show here
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    );
+  } else {
+    tableContents = (
+      <TableBody>
+        {contacts.map((contact) => (
+          <TableRow
+            key={contact._id}
+            sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          >
+            <TableCell component="th" scope="row">
+              {contact.phoneNumber}
+            </TableCell>
+            <TableCell align="right">
+              {contact.everContacted ? "Yes" : "Never"}
+            </TableCell>
+            <TableCell align="right">{contact.lastContactedDate}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    );
+  }
 
-export default function ContactListContacts({contactList}) {
-
-    const contacts = contactList.contacts;
-
-    let tableContents;
-    if (contacts.length === 0) {
-        tableContents = <div>Nothing to show here</div>
-    } else {
-        tableContents = 
-            <TableBody>
-          {contacts.map((contact) => (
-            <TableRow
-              key={contact._id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {contact.phoneNumber}
-              </TableCell>
-              <TableCell align="right">{contact.everContacted?'Yes':'Never'}</TableCell>
-              <TableCell align="right">{contact.lastContactedDate}</TableCell>
-
-            </TableRow>
-          ))}
-        </TableBody>
-    }
-
-    
   return (
     <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Phone Number</TableCell>
+              <TableCell align="right">Ever Contacted?</TableCell>
+              <TableCell align="right">Last Contacted Date</TableCell>
+            </TableRow>
+          </TableHead>
 
-    
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Phone Number</TableCell>
-            <TableCell align="right">Ever Contacted?</TableCell>
-            <TableCell align="right">Last Contacted Date</TableCell>
-          </TableRow>
-        </TableHead>
+          {tableContents}
 
-        {tableContents}
-
-
-    {/* <TableBody>
+          {/* <TableBody>
            {rows.map((row) => (
             <TableRow
               key={row.name}
@@ -68,9 +73,8 @@ export default function ContactListContacts({contactList}) {
             </TableRow>
           ))}
         </TableBody> */}
-
-      </Table>
-    </TableContainer>
+        </Table>
+      </TableContainer>
     </>
   );
 }

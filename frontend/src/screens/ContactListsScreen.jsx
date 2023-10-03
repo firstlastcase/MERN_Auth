@@ -8,12 +8,14 @@ import { DataGrid } from '@mui/x-data-grid';
 import SkeletonLoader from "../components/SkeletonLoader"
 import ContactListUpload from "../components/ContactListUpload"
 import ContactListContacts from "../components/ContactListContacts";
+// import { useDispatch } from "react-redux";
+// import { setContactList } from "../store/slices/contactListSlice";
 
 
 
 export default function ContactListsScreen(){
 
-
+    // const dispatch = useDispatch();
     const {data:contactLists, error, isLoading} = useFetchContactListsQuery()
         
     const columns = [
@@ -40,6 +42,7 @@ export default function ContactListsScreen(){
     } else if(error){
         content = <div>Error: {error?.data?.message}</div>
     } else {
+      // dispatch(setContactList(contactLists));
       content=(
         <div style={{ height: 600, width: '100%' }}>
           <DataGrid

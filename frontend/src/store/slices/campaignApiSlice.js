@@ -6,6 +6,7 @@ const CAMPAIGN_URL = '/api/campaign';
 export const campaignApiSlice = apiSlice.injectEndpoints({
     endpoints:(builder)=>({
         fetchCampaigns: builder.query({
+            providesTags:['Campaign'],
             query:(data)=>({
                 url:`${CAMPAIGN_URL}/${data}`, //data is the account id
                 method:'GET'
@@ -15,6 +16,14 @@ export const campaignApiSlice = apiSlice.injectEndpoints({
         invalidatesTags:['Campaign'],
         query:(data)=>({
             url:`${CAMPAIGN_URL}/new`,
+            method:'POST',
+            body:data
+        })
+        }),
+        createCampaign: builder.mutation({
+        invalidatesTags:['Campaign'],
+        query:(data)=>({
+            url:`${CAMPAIGN_URL}/create`,
             method:'POST',
             body:data
         })
@@ -37,4 +46,8 @@ export const campaignApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const {useFetchCampaignsQuery, useAddCampaignMutation} = campaignApiSlice;
+export const {  useFetchCampaignsQuery, 
+                useAddCampaignMutation,
+                useCreateCampaignMutation,
+                useDeleteCampaignMutation
+                } = campaignApiSlice;
