@@ -3,7 +3,7 @@ import { useState} from "react"
 import {Button, Form} from 'react-bootstrap'
 // import {useDispatch, useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
-import Loader from "./Loader"
+import Loader from "./Common_Components/Loader"
 import { useUpdateAccountMutation } from "../store/slices/accountApiSlice"
 
 

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import {Button, Form} from 'react-bootstrap'
 import {toast} from 'react-toastify'
-import Loader from "./Loader"
+import Loader from "./Common_Components/Loader"
 import { useUpdateUserRoleMutation } from "../store/slices/usersApiSlice"
 
 

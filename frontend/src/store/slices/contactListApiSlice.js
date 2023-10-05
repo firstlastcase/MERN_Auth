@@ -11,6 +11,7 @@ const CONTACTLIST_URL = '/api/contactlist';
 export const contactListApiSlice = apiSlice.injectEndpoints({
     endpoints:(builder)=>({
         fetchContactLists: builder.query({
+            providesTags: ['ContactList'],
             query:()=>({
                 url:`${CONTACTLIST_URL}/all`, 
                 method:'GET'
@@ -26,7 +27,7 @@ export const contactListApiSlice = apiSlice.injectEndpoints({
         }),
         addContactsToContactList: builder.mutation({
         invalidatesTags:['ContactList'],
-        query:(id,data)=>({
+        query:({id,data})=>({
             url:`${CONTACTLIST_URL}/one/${id}`,
             method:'POST',
             body:data

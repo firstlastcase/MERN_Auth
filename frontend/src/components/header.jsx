@@ -1,5 +1,5 @@
-import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
-import { FaSignInAlt, FaRocket, FaSignOutAlt,FaPhoneSquareAlt } from 'react-icons/fa';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { FaSignInAlt, FaSignOutAlt,FaPhoneSquareAlt } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector} from 'react-redux';
 import useLogout from '../hooks/useLogout';
@@ -13,9 +13,7 @@ const Header = () => {
 
   let saContent = null;
   if (userInfo && userInfo.role && userInfo.role.toString() === import.meta.env.VITE_SA_ROLE) {
-   
-  // if (userInfo ) {
-    
+       
     saContent = (
 
       <Nav>
@@ -84,12 +82,7 @@ const Header = () => {
                     <LinkContainer to='/account'>
                       <NavDropdown.Item>Account Info</NavDropdown.Item>
                     </LinkContainer>
-                    {/* <LinkContainer to='/campaignslist'>
-                      <NavDropdown.Item>Campaigns List</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to='/campaign'>
-                      <NavDropdown.Item>Campaign</NavDropdown.Item>
-                    </LinkContainer> */}
+
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
                     </NavDropdown.Item>

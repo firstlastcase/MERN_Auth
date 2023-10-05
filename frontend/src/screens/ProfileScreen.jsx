@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
 // import {useNavigate } from "react-router-dom"
 import {Button, Form} from 'react-bootstrap'
-import FormContainer from "../components/FormContainer"
+import FormContainer from "../components/Common_Components/FormContainer"
 import {useDispatch, useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
-import Loader from "../components/Loader"
+import Loader from "../components/Common_Components/Loader"
 import { useUpdateUserMutation } from "../store/slices/usersApiSlice"
 import { setCredentials } from "../store/slices/authSlice"
 import useIdleLogout from "../hooks/useIdleLogout"
-import IdleTimeout from "../components/IdleTimeout"
+import IdleTimeout from "../components/Common_Components/IdleTimeout"
 
 
 export default function ProfileScreen() {

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
 // import {useNavigate } from "react-router-dom"
 import {Button, Form} from 'react-bootstrap'
-import FormContainer from "../components/FormContainer"
+import FormContainer from "../components/Common_Components/FormContainer"
 import {useDispatch, useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
-import Loader from "../components/Loader"
+import Loader from "../components/Common_Components/Loader"
 import { useGetAccountQuery } from "../store/slices/accountApiSlice"
 import { setAccount } from "../store/slices/accountSlice"
 import useIdleLogout from "../hooks/useIdleLogout"
-import IdleTimeout from "../components/IdleTimeout"
+import IdleTimeout from "../components/Common_Components/IdleTimeout"
 
 
 export default function AccountScreen() {

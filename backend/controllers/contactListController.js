@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import ContactList from "../models/contactListModel.js"
 import User from "../models/userModel.js"
 import Account from "../models/accountModel.js"
+import {encrypt, decrypt} from "../utils/encryptData.js"
 
 
 // @description     Add a new contactList 
@@ -16,7 +17,7 @@ const createContactList = asyncHandler(async (req, res)=>{
         const account = await Account.findById(user.account);
 
         if (!account) {
-            console.log(req.body);
+            // console.log(req.body);
             res.status(400).json({ error: 'cant create a contact list for a user without a valid acccount' });
             return;
         }
@@ -77,7 +78,7 @@ const createContactListBySA = asyncHandler(async (req, res)=>{
         const account = await Account.findOne({ number: accountNumber });
 
         if (!account) {
-            console.log(req.body);
+            // console.log(req.body);
             res.status(400).json({ error: 'You need to provide a valid Account number' });
             return;
         }
@@ -125,7 +126,6 @@ const createContactListBySA = asyncHandler(async (req, res)=>{
 
 
 //################################################################
-
 // @description     Delete contactList 
 // route            delete /api/contactist/one/:id
 // @access          Private
@@ -175,7 +175,6 @@ const deleteContactList = asyncHandler(async (req, res)=>{
 })
 
 //################################################################
-
 // @description     Delete contactList 
 // route            delete /api/contactist/oneBySA/:id
 // @access          SA
@@ -218,68 +217,64 @@ const deleteContactListBySA = asyncHandler(async (req, res)=>{
 
 })
 
-// @description     Get contactList
-// route            Get /api/contactist/one/:id
-// @access          Private
-// const getContactList = asyncHandler(async (req, res)=>{
-
-//     try {
-//         const contactList = await ContactList.findById(req.params.id);
-//         if (!contactList) {
-//             return res.status(404).json({ error: 'Contact list not found' });
-//         }
-//         res.json(contactList);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: 'Error fetching contact list' });
-//     }
-
-// })
-
-
-
-// @description     Update contactList
-// route            Put /api/contactist/one/:id
-// @access          Private
-// const updateContactList = asyncHandler(async (req, res)=>{
-
-
-// })
-
 
 // #################################################################
 // @description     fetch contactLists for the user's own account
-// route            Get /api/contactist/all/:accountId
+// route            Get /api/contactist/all/
 // @access          Private
 const fetchContactLists = asyncHandler(async (req, res)=>{
 
-    // if (!req.params) {
-    //     res.status(400).json({ error: 'Account ID is required' });
-    //     return;
-    // }
     
     try {
-        const user = await User.findById(req.user.id);
-        
-        if (!user) {
-            res.status(401).json({ error: 'User not found' });
-            return;
-        }
-        
-        // if (user.account.toString() !== req.params.accountId) {
-        //     res.status(401).json({ error: 'Not Authorized. You can only view Contact Lists associated with your own account.' });
-        //     return;
-        // }
+      const user = await User.findById(req.user.id);
 
-        // const contactLists = await ContactList.find({ account: req.params.accountId });
-        const contactLists = await ContactList.find({ account: user.account });
-        
-        if (contactLists.length === 0) {
-            res.status(404).json({ error: 'No contact lists found for this account' });
-            return;
+      if (!user) {
+        res.status(401).json({ error: "User not found" });
+        return;
+      }
+
+      const contactLists = await ContactList.find({ account: user.account });
+      // console.log(JSON.stringify(contactLists));
+
+      if (contactLists.length === 0) {
+        res
+          .status(404)
+          .json({ error: "No contact lists found for this account" });
+        return;
+      }
+      // Decrypt and use individual contacts
+      const decryptedContactLists = contactLists.map((originalContactList) => {
+        // const contactList = {...originalContactList}
+        const contactList = originalContactList.toObject();
+        // console.log('###### JSON copy of the original ContactList>>> '+JSON.stringify(contactList))
+        const contacts = contactList.contacts; // contacts is an array of objects
+
+        let contactsDecryptedPNs = [];
+        if (contacts.length > 0) {
+          contactsDecryptedPNs = contacts.map((originalContact) => {
+            // each contact is an object {_id, phoneNumber, everContacted, lastContacted,..}
+            // console.log('&&&&& originalContact>>>'+JSON.stringify(originalContact))
+            const contact = { ...originalContact };
+            // console.log('@@@@@@ JSON copy of the original contact>>> '+JSON.stringify(contact))
+            const decryptedPhoneNumber = contact.encryptedPhoneNumber
+              ? decrypt(contact.encryptedPhoneNumber)
+              : null;
+            if (contact.encryptedPhoneNumber) {
+              delete contact.encryptedPhoneNumber;
+            }
+            contact.phoneNumber = decryptedPhoneNumber;
+            // contact.DecryptedPhoneNumber = decryptedPhoneNumber
+            // console.log(">>>>> JSON contact (After decryption) >>  " +JSON.stringify(contact));
+            return contact;
+          });
         }
 
-        res.status(200).json(contactLists);
+        contactList.contacts = contactsDecryptedPNs;
+        return contactList;
+      });
+      // console.log('$$$$$$$$$ Dycrypted contactList  '+JSON.stringify(decryptedContactLists));
+
+      res.status(200).json(decryptedContactLists);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error fetching contact list' });
@@ -288,7 +283,7 @@ const fetchContactLists = asyncHandler(async (req, res)=>{
 
 
 //################################################################
-
+// Below code in this section is outdated as of 5 Oct 2023
 // @description     fetch contactLists for a specific account
 // route            Get /api/contactist/allBySA/:accountId
 // @access          SA
@@ -326,7 +321,10 @@ const addContactsToContactList = asyncHandler(async (req, res)=>{
     const user = await User.findById(req.user.id);
 
     const id = req.params.id;   // id is the contact list id
-    const newContacts = req.body.contacts; // An array of new contacts and the action whether to replace or to add to existing contacts
+    // const newContacts = req.body.contacts; // An array of new contacts and the action whether to replace or to add to existing contacts
+    const newContacts = req.body; // An array of new contacts and the action whether to replace or to add to existing contacts
+
+    // console.log(newContacts)
 
     try {
         // Find the ContactList document by ID
@@ -353,13 +351,16 @@ const addContactsToContactList = asyncHandler(async (req, res)=>{
             return;
         }
 
-        contactList.contacts.splice(0,contactList.contacts.length)        
-        
-        // if replaceAll is true, empty the contacts first
-        // replaceAll&&contactList.contacts.splice(0,contactList.contacts.length)
+        //empty the list first
+        contactList.contacts.splice(0,contactList.contacts.length)
 
-        // Push the new contacts to the 'contacts' array
-        contactList.contacts.push(...newContacts);
+        const newContactsEncryptedPhoneNumbers = newContacts.map(contact=> {
+            const encryptedPhoneNumber = encrypt(contact.phoneNumber.toString())
+            delete contact.phoneNumber;
+            return {...contact,encryptedPhoneNumber}// console.log('encryptedPhoneNumber: '+encryptedPhoneNumber)
+        })
+
+        contactList.contacts.push(...newContactsEncryptedPhoneNumbers);
 
         // Save the updated ContactList
         const updatedContactList = await contactList.save();
@@ -375,6 +376,7 @@ const addContactsToContactList = asyncHandler(async (req, res)=>{
 
 
 //################################################################
+// Below code in this section is outdated as of Oct 5, 2023
 // @description     add multiple contacts to a contact list
 // route            Post /contactist/oneBySA/:id
 // @access          SA
@@ -382,7 +384,7 @@ const addContactsToContactListBySA = asyncHandler(async (req, res)=>{
 
     const id = req.params.id;   // id is the contact list id
     // const {contacts,replaceAll} = req.body; // An array of new contacts and the action whether to replace or to add to existing contacts
-    const newContacts = req.body.contacts; // An array of new contacts and the action whether to replace or to add to existing contacts
+    const newContacts = req.body; // An array of new contacts and the action whether to replace or to add to existing contacts
 
 
 
@@ -426,6 +428,7 @@ const addContactsToContactListBySA = asyncHandler(async (req, res)=>{
 
 
 // #################################################################
+// Below code in this section is outdated as of Oct 5, 2023
 // @description     get a contactList by id (request initiated by the user)
 // route            Get /api/contactist/one/:id
 // @access          Private

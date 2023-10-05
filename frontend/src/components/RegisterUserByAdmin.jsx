@@ -1,7 +1,7 @@
 import { useState } from "react"
 // import {Button, Form, Row, Col} from 'react-bootstrap'
 import {toast} from 'react-toastify'
-import Loader from "./Loader"
+import Loader from "./Common_Components/Loader"
 import { useRegisterMutation } from "../store/slices/usersApiSlice"
 import { useSelector } from "react-redux"
 import Box from '@mui/material/Box';

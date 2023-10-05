@@ -1,24 +1,21 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Col, Form, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import Loader from "../components/Loader";
 import { toast } from "react-toastify";
-import IdleTimeout from "../components/IdleTimeout";
+import IdleTimeout from "../components/Common_Components/IdleTimeout";
 import useIdleLogout from "../hooks/useIdleLogout";
 import { useDeleteCampaignMutation, useFetchCampaignsQuery } from "../store/slices/campaignApiSlice";
-// import Tab from 'react-bootstrap/Tab';
-import AppModal from "../components/AppModal";
+import AppModal from "../components/Common_Components/AppModal";
 import CampaignAdd from "../components/CampaignAdd";
-import { DataGrid } from "@mui/x-data-grid";
+// import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
-import SkeletonLoader from "../components/SkeletonLoader";
+import SkeletonLoader from "../components/Common_Components/SkeletonLoader";
 import { useFetchContactListsQuery } from "../store/slices/contactListApiSlice";
+
 
 export default function CampaignsScreen() {
   const { accountInfo } = useSelector((state) => state.account);
 
-  const { data: campaigns, error, isLoading } = useFetchCampaignsQuery(accountInfo._id);
+  const { data: campaigns, error, isFetching } = useFetchCampaignsQuery(accountInfo._id);
   const { data: contactLists } = useFetchContactListsQuery();
 
   // console.log(contactLists[0].name)
@@ -37,7 +34,7 @@ export default function CampaignsScreen() {
 
 
   let campaignsContent;
-  if (isLoading) {
+  if (isFetching) {
     campaignsContent = <SkeletonLoader />;
   } else if (error) {
     toast.error(error);
@@ -138,7 +135,7 @@ export default function CampaignsScreen() {
         <h2>Campains</h2>
         <AppModal
           buttonText="Add New Campaign"
-          buttonAttributes={{ variant: "secondary" }}
+          buttonAttributes={{ variant: "outlined" }}
           title={"Add New Campaign"}
           modalContent={<CampaignAdd accountNumber={accountInfo.number} />}
         />

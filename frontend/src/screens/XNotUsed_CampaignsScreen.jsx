@@ -11,7 +11,7 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 // import Tab from 'react-bootstrap/Tab';
-import AppModal from '../components/AppModal'
+import AppModal from '../components/Common_Components/AppModal'
 import CampaignAdd from "../components/CampaignAdd"
 
 import PropTypes from 'prop-types';

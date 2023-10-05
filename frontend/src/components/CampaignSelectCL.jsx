@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useFetchContactListsQuery } from "../store/slices/contactListApiSlice";
-import Loader from "./Loader";
+import Loader from "./Common_Components/Loader";
 
 export default function SelectContactList({onSelectChange}) {
   const { data: contactLists, error, isLoading } = useFetchContactListsQuery();

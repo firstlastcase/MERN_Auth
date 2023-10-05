@@ -6,10 +6,14 @@ const contactSchema = mongoose.Schema({
         type: String,
         required: false,
     },
-    phoneNumber:{
+    encryptedPhoneNumber:{
         type: String,
         required: true
     },
+    // phoneNumber:{
+    //     type: String,
+    //     required: true
+    // },
     status:{
         type: Number,
         required: false,

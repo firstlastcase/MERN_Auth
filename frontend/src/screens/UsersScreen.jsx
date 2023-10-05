@@ -1,19 +1,19 @@
 import {Button} from 'react-bootstrap'
 import Container from 'react-bootstrap/Container';
-import Loader from "../components/Loader"
+import Loader from "../components/Common_Components/Loader"
 import {toast} from 'react-toastify'
-import IdleTimeout from "../components/IdleTimeout"
+import IdleTimeout from "../components/Common_Components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
 import {useFetchUsersQuery, useDeleteUserMutation} from "../store/slices/usersApiSlice"
 import { useFetchAccountsQuery } from '../store/slices/accountApiSlice';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import AppModal from '../components/AppModal';
+import AppModal from '../components/Common_Components/AppModal';
 import UserEdit from '../components/UserEdit';
 import UserAdd from '../components/UserAdd';
 // import UserAdd2 from '../components/UserAdd2';
 import { useSelector } from 'react-redux'
-import SkeletonLoader from '../components/SkeletonLoader';
+import SkeletonLoader from '../components/Common_Components/SkeletonLoader';
 
 
 export default function UsersScreen(){

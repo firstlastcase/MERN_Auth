@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import FormContainer from "../components/FormContainer";
+import FormContainer from "../components/Common_Components/FormContainer";
 import { useLoginMutation } from "../store/slices/usersApiSlice";
 import { setCredentials } from "../store/slices/authSlice";
 import { toast } from "react-toastify";
-import Loader from "../components/Loader";
+import Loader from "../components/Common_Components/Loader";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";

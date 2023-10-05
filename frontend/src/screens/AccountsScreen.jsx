@@ -1,17 +1,17 @@
 import {Button} from 'react-bootstrap'
 import Container from 'react-bootstrap/Container';
-import Loader from "../components/Loader"
+import Loader from "../components/Common_Components/Loader"
 import {toast} from 'react-toastify'
-import IdleTimeout from "../components/IdleTimeout"
+import IdleTimeout from "../components/Common_Components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
 import {useFetchAccountsQuery, useDeleteAccountMutation} from "../store/slices/accountApiSlice"
 import { useFetchUsersQuery } from '../store/slices/usersApiSlice';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import AppModal from '../components/AppModal';
+import AppModal from '../components/Common_Components/AppModal';
 import AccountEdit from '../components/AccountEdit';
 import AccountAdd from '../components/AccountAdd';
-import SkeletonLoader from '../components/SkeletonLoader';
+import SkeletonLoader from '../components/Common_Components/SkeletonLoader';
 
 export default function AccountsScreen(){
 

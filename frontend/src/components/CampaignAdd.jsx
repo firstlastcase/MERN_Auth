@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
-import Loader from "./Loader";
+import Loader from "./Common_Components/Loader";
 import { useCreateCampaignMutation } from "../store/slices/campaignApiSlice";
-import SelectContactList from "./CampaignSelectContactList";
+import SelectContactList from "./CampaignSelectCL";
 import { Box, TextField } from "@mui/material";
 
 export default function CampaignAdd() {

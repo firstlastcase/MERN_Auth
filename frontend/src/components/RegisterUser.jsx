@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
-import FormContainer from "./FormContainer"
+import FormContainer from "./Common_Components/FormContainer"
 import { useRegisterMutation } from "../store/slices/usersApiSlice"
 import {toast} from 'react-toastify'
-import Loader from './Loader';
+import Loader from './Common_Components/Loader';
 
 import Button from "@mui/material/Button";
 import  TextField from "@mui/material/TextField";

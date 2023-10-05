@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from'react-redux';
 import useIdleLogout from '../hooks/useIdleLogout';
-import IdleTimeout from '../components/IdleTimeout';
+import IdleTimeout from '../components/Common_Components/IdleTimeout';
 import { useGetAccountQuery } from '../store/slices/accountApiSlice';
 import { setAccount } from '../store/slices/accountSlice';
 

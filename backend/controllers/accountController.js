@@ -1,11 +1,11 @@
 import asyncHandler from 'express-async-handler'
 import Account from "../models/accountModel.js"
 import User from "../models/userModel.js"
-import axios from 'axios'
 
-// @description     Add a new account 
-// route            POST /api/account
-// @access          Private
+
+// @description     Add a new account by SA user
+// route            POST /api/account/new
+// @access          SA
 const createAccount = asyncHandler(async (req, res)=>{
     //  account:{name,number,status} 
     const {name,number,status} = req.body
@@ -54,8 +54,8 @@ const getAccount = asyncHandler(async (req, res)=>{
 })
 
 // @description     Fetch accounts
-// route            Get /api/account
-// @access          Private
+// route            Get /api/account/list
+// @access          SA
 const fetchAccounts = asyncHandler(async (req, res)=>{
 
 
@@ -71,7 +71,7 @@ const fetchAccounts = asyncHandler(async (req, res)=>{
 
 // @description     Delete account 
 // route            delete /api/account/:id
-// @access          Private
+// @access          SA
 const deleteAccount = asyncHandler(async (req, res)=>{
 
     const account = await Account.findById(req.params.id)
@@ -79,18 +79,6 @@ const deleteAccount = asyncHandler(async (req, res)=>{
         res.status(400)
         throw new Error('account not found')
     }
-
-    // const user = await User.findById(req.user.id)
-
-    // if(!user){
-    //     res.status(404)
-    //     throw new Error('could not find user')
-    // }
-
-    // if(user.role!== parseInt(process.env.SA_ROLE)){
-    //     res.status(401)
-    //     throw new Error('Not Authorised')
-    // }
 
 // how can we check if there are users associated with this account before deleting it?      
 
@@ -105,7 +93,7 @@ const deleteAccount = asyncHandler(async (req, res)=>{
 
 // @description     Update account
 // route            Put /api/account/:id
-// @access          Private
+// @access          SA
 const updateAccount = asyncHandler(async (req, res)=>{
 
     const accountToUpdate = await Account.findById(req.params.id)
@@ -135,8 +123,6 @@ const updateAccount = asyncHandler(async (req, res)=>{
         res.status(404)
         throw new Error('Account not found')
     }
-    // res.status(200).json({message:'Update Account Profile'})
 })
 
-// export { runAccount, getAccounts, updateAccount, addNewAccount, deleteAccount}
 export { createAccount, getAccount,fetchAccounts,updateAccount,deleteAccount}

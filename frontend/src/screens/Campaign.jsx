@@ -2,9 +2,9 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import {Button, Form} from 'react-bootstrap'
 import { useSelector} from 'react-redux'
-import FormContainer from "../components/FormContainer"
+import FormContainer from "../components/Common_Components/FormContainer"
 import {toast} from 'react-toastify'
-import IdleTimeout from "../components/IdleTimeout"
+import IdleTimeout from "../components/Common_Components/IdleTimeout"
 import useIdleLogout from "../hooks/useIdleLogout"
 
 // import TableView from "./XTestFileTable"
